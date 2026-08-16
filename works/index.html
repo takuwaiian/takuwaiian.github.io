@@ -1,0 +1,849 @@
+<title>AI業務自動化 実績集（提出用）</title>
+<style>
+  :root{
+    --ground:#F6F8FB;
+    --surface:#FFFFFF;
+    --ink:#16202B;
+    --ink-2:#5B6977;
+    --ink-3:#8A97A5;
+    --rule:#D7DFE8;
+    --grid:#E9EEF4;
+    --accent:#23508C;
+    --accent-soft:#EAF0F9;
+    --flag:#AE3F2B;
+    --flag-soft:#FBEDEA;
+    --chip:#EEF2F7;
+    --serif:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+    --gothic:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Noto Sans JP",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0F141A;
+      --surface:#161D25;
+      --ink:#E3EAF2;
+      --ink-2:#9CAAB8;
+      --ink-3:#6F7D8B;
+      --rule:#2A3541;
+      --grid:#1A222B;
+      --accent:#82AADE;
+      --accent-soft:#1A2635;
+      --flag:#E2907A;
+      --flag-soft:#2C1F1C;
+      --chip:#1E2833;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0F141A;
+    --surface:#161D25;
+    --ink:#E3EAF2;
+    --ink-2:#9CAAB8;
+    --ink-3:#6F7D8B;
+    --rule:#2A3541;
+    --grid:#1A222B;
+    --accent:#82AADE;
+    --accent-soft:#1A2635;
+    --flag:#E2907A;
+    --flag-soft:#2C1F1C;
+    --chip:#1E2833;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--gothic);
+    font-size:16px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- 見出し ---------- */
+  .masthead{
+    border-bottom:1px solid var(--rule);
+    background:
+      repeating-linear-gradient(to bottom,transparent 0 33px,var(--grid) 33px 34px),
+      var(--surface);
+  }
+  .masthead .wrap{padding-top:56px;padding-bottom:44px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--ink-3);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(30px,5.2vw,46px);
+    line-height:1.3;
+    letter-spacing:.01em;
+    margin:0 0 18px;
+    text-wrap:balance;
+  }
+  .lede{
+    max-width:62ch;
+    font-size:17px;
+    color:var(--ink-2);
+    margin:0 0 32px;
+  }
+  .facts{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+  }
+  .fact{background:var(--surface);padding:16px 18px;}
+  .fact dt{font-size:12px;color:var(--ink-3);margin:0 0 4px;letter-spacing:.04em;}
+  .fact dd{
+    margin:0;
+    font-family:var(--serif);
+    font-size:22px;
+    font-variant-numeric:tabular-nums;
+    line-height:1.3;
+  }
+  .stamp{
+    margin-top:26px;
+    font-size:13px;
+    color:var(--ink-3);
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- 本体レイアウト ---------- */
+  .layout{display:grid;gap:48px;padding:56px 0 80px;}
+  @media (min-width:960px){
+    .layout{grid-template-columns:210px minmax(0,1fr);gap:56px;}
+  }
+  nav.index{align-self:start;}
+  @media (min-width:960px){
+    nav.index{position:sticky;top:32px;}
+  }
+  .index h2{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    color:var(--ink-3);
+    font-weight:400;
+    margin:0 0 12px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--rule);
+  }
+  .index ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+  .index a{
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+    padding:5px 0;
+    text-decoration:none;
+    color:var(--ink-2);
+    font-size:13px;
+    line-height:1.5;
+    border-bottom:1px solid transparent;
+  }
+  .index a:hover{color:var(--accent);}
+  .index .k{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:none;width:14px;}
+  .index a:hover .k{color:var(--accent);}
+
+  main{min-width:0;}
+  section{margin-bottom:64px;}
+  section:last-child{margin-bottom:0;}
+  h2.sec{
+    font-family:var(--serif);
+    font-size:21px;
+    font-weight:600;
+    margin:0 0 6px;
+    letter-spacing:.02em;
+  }
+  .sec-note{margin:0 0 24px;color:var(--ink-2);font-size:14px;max-width:62ch;}
+
+  /* ---------- 表 ---------- */
+  .scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px;}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;}
+  thead th{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.1em;
+    color:var(--ink-3);
+    font-weight:400;
+    background:var(--chip);
+    white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:0;}
+  td.field{font-weight:600;white-space:nowrap;}
+
+  /* ---------- ケース ---------- */
+  .case{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-top:2px solid var(--ink);
+    padding:22px 24px 24px;
+    margin-bottom:20px;
+  }
+  .case-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:14px;}
+  .case-id{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.1em;
+    color:var(--ink-3);
+    border:1px solid var(--rule);
+    padding:2px 8px;
+    flex:none;
+  }
+  .case h3{
+    font-family:var(--serif);
+    font-size:19px;
+    font-weight:600;
+    line-height:1.45;
+    margin:0;
+    flex:1 1 260px;
+    text-wrap:balance;
+  }
+  .live{
+    font-family:var(--gothic);
+    font-size:11px;
+    letter-spacing:.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    padding:2px 9px;
+    text-decoration:none;
+    white-space:nowrap;
+    flex:none;
+  }
+  .live:hover{background:var(--accent);color:var(--surface);}
+
+  /* ---------- 効果の図 ---------- */
+  .viz{
+    margin:0 0 18px;
+    padding:15px 16px 13px;
+    background:var(--ground);
+    border:1px solid var(--rule);
+  }
+  .viz + .viz{margin-top:-6px;}
+  .career{background:var(--surface);margin-bottom:26px;}
+
+  /* ---------- 問い合わせ ---------- */
+  .contact{
+    border:1px solid var(--accent);
+    background:var(--accent-soft);
+    padding:20px 22px;
+  }
+  .contact h2{
+    font-family:var(--serif);
+    font-size:19px;
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .contact p.note{margin:0 0 16px;font-size:13.5px;color:var(--ink-2);max-width:60ch;}
+  .links{display:flex;flex-wrap:wrap;gap:10px;}
+  .links a{
+    display:inline-flex;
+    align-items:baseline;
+    gap:9px;
+    background:var(--surface);
+    border:1px solid var(--rule);
+    padding:10px 15px;
+    text-decoration:none;
+    color:var(--ink);
+    font-size:14px;
+  }
+  .links a:hover{border-color:var(--accent);color:var(--accent);}
+  .links .lbl{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--ink-3);
+  }
+  .links a:hover .lbl{color:var(--accent);}
+  .links .val{font-variant-numeric:tabular-nums;}
+  figcaption{margin-top:11px;font-size:12px;line-height:1.7;color:var(--ink-3);}
+
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;}
+  .flow .step{
+    font-size:12.5px;
+    line-height:1.45;
+    background:var(--surface);
+    border:1px solid var(--rule);
+    padding:5px 10px;
+  }
+  .flow .step.hi{border-color:var(--accent);color:var(--accent);font-weight:600;}
+  .flow .step.stop{border-color:var(--flag);color:var(--flag);}
+  .flow .arw{color:var(--ink-3);font-size:11px;flex:none;}
+
+  .metric{display:flex;flex-direction:column;gap:9px;}
+  .m-row{display:grid;grid-template-columns:58px minmax(0,1fr) auto;align-items:center;gap:11px;}
+  .m-lab{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.1em;
+    color:var(--ink-3);
+  }
+  .m-track{height:11px;background:var(--chip);position:relative;}
+  .m-fill{position:absolute;top:0;bottom:0;left:0;width:var(--w);}
+  .m-fill.b{background:var(--flag);}
+  .m-fill.a{background:var(--accent);}
+  .m-val{font-size:12.5px;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .m-val b{font-family:var(--serif);font-size:15px;color:var(--ink);font-weight:600;}
+
+  .payload{display:grid;gap:11px;}
+  @media (min-width:640px){.payload{grid-template-columns:1fr 1fr;}}
+  .pl{
+    border:1px solid var(--rule);
+    background:var(--surface);
+    padding:10px 12px;
+    overflow-x:auto;
+  }
+  .pl .h{
+    font-size:11px;
+    letter-spacing:.06em;
+    margin-bottom:7px;
+    font-weight:600;
+  }
+  .pl.no .h{color:var(--flag);}
+  .pl.yes .h{color:var(--accent);}
+  .pl pre{
+    margin:0;
+    font-family:var(--mono);
+    font-size:11px;
+    line-height:1.75;
+    color:var(--ink-2);
+    white-space:pre;
+  }
+  .pl pre .add{color:var(--accent);font-weight:600;}
+
+  .ba{display:grid;gap:14px;margin-bottom:16px;}
+  .ba > div{padding:11px 0 11px 15px;}
+  .before{border-left:3px solid var(--flag);background:var(--flag-soft);}
+  .after{border-left:3px solid var(--accent);background:var(--accent-soft);}
+  .ba .lbl{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.16em;
+    display:block;
+    margin-bottom:3px;
+  }
+  .before .lbl{color:var(--flag);}
+  .after .lbl{color:var(--accent);}
+  .ba p{margin:0;font-size:14.5px;line-height:1.8;}
+
+  .did{margin:0 0 16px;padding:0;list-style:none;}
+  .did li{
+    position:relative;
+    padding-left:18px;
+    font-size:14.5px;
+    line-height:1.8;
+    margin-bottom:5px;
+  }
+  .did li::before{
+    content:"";
+    position:absolute;
+    left:2px;top:.78em;
+    width:6px;height:1px;
+    background:var(--ink-3);
+  }
+  .tech{
+    font-size:13px;
+    color:var(--ink-2);
+    border-top:1px solid var(--rule);
+    padding-top:12px;
+    margin:0;
+  }
+  .tech b{color:var(--ink);font-weight:600;}
+
+  .grid2{display:grid;gap:14px;}
+  @media (min-width:720px){.grid2{grid-template-columns:1fr 1fr;}}
+  .card{background:var(--surface);border:1px solid var(--rule);padding:16px 18px;}
+  .card h4{margin:0 0 6px;font-size:14.5px;font-weight:600;}
+  .card p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75;}
+
+  footer{border-top:1px solid var(--rule);background:var(--surface);}
+  footer .wrap{padding:28px 24px 44px;}
+  footer p{margin:0 0 8px;font-size:13px;color:var(--ink-2);max-width:70ch;}
+  strong{font-weight:600;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+
+  /* ---------- スマートフォン ---------- */
+  @media (max-width:560px){
+    body{font-size:15.5px;line-height:1.8;}
+    .wrap{padding:0 16px;}
+    .masthead .wrap{padding-top:36px;padding-bottom:32px;}
+    .facts{grid-template-columns:1fr 1fr;}
+    .fact{padding:13px 14px;}
+    .fact dd{font-size:19px;}
+    .layout{padding:36px 0 56px;gap:36px;}
+    .case{padding:18px 16px 20px;}
+    .case h3{font-size:17.5px;}
+    .case-head{gap:10px;}
+    .viz{padding:13px 13px 11px;}
+    .flow{gap:6px;}
+    .flow .step{font-size:12px;padding:5px 9px;}
+    /* 縦並びのときは横矢印が意味を失うので下向きにする */
+    .flow .arw{font-size:10px;}
+    .m-row{grid-template-columns:46px minmax(0,1fr) auto;gap:9px;}
+    .m-val{font-size:12px;}
+    .ba > div{padding:10px 0 10px 12px;}
+    .index ol{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      column-gap:12px;
+      border-top:1px solid var(--rule);
+      padding-top:6px;
+    }
+    section{margin-bottom:48px;}
+  }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">PORTFOLIO ／ 業務自動化 実績集</p>
+    <h1>現場のいち事務担当が、<br>部門まるごとをシステムに置き換えた記録</h1>
+    <p class="lede">
+      元・営業職。コーディングは初心者から独学で始めました。それでも生成AIを相棒にして、事務部門1名分の仕事をシステムに置き換え、約220名規模のバックオフィス業務を一人で回せる状態をつくっています。専任エンジニアではないぶん、強みは「現場の困りごとを、現場の言葉のまま自動化する」ことです。
+    </p>
+    <figure class="viz career">
+      <div class="flow">
+        <span class="step">元・営業職</span><span class="arw">→</span>
+        <span class="step">事務部門へ</span><span class="arw">→</span>
+        <span class="step">独学でGAS・Pythonを習得</span><span class="arw">→</span>
+        <span class="step hi">部門の業務を20件以上システム化</span><span class="arw">→</span>
+        <span class="step hi">外部クライアント案件を有償で完遂</span>
+      </div>
+      <div class="flow" style="margin-top:10px;">
+        <span class="arw">担当領域</span>
+        <span class="step">台帳・期日管理</span>
+        <span class="step">帳票の自動生成</span>
+        <span class="step">OCR</span>
+        <span class="step">データ分析</span>
+        <span class="step">運用基盤</span>
+        <span class="step">要件定義</span>
+      </div>
+      <figcaption>専任エンジニアではありません。だからこそ「現場の困りごとを、現場の言葉のまま自動化する」ことを強みにしています。</figcaption>
+    </figure>
+    <dl class="facts">
+      <div class="fact"><dt>構築・運用したシステム</dt><dd>20件以上</dd></div>
+      <div class="fact"><dt>台帳で管理する対象者</dt><dd>約220名</dd></div>
+      <div class="fact"><dt>外部クライアント案件</dt><dd>有償で完遂</dd></div>
+      <div class="fact"><dt>動かせるデモ</dt><dd>2件</dd></div>
+    </dl>
+    <p class="stamp">作成：2026年7月／最終更新：2026年8月　｜　対象領域：GAS・Python・OCR・生成AI・業務フロー設計</p>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="layout">
+
+  <nav class="index" aria-label="実績ケース索引">
+    <h2>CASE INDEX</h2>
+    <ol>
+      <li><a href="#c-a"><span class="k">A</span>台帳一元化・期日管理</a></li>
+      <li><a href="#c-b"><span class="k">B</span>申請帳票の自動生成</a></li>
+      <li><a href="#c-c"><span class="k">C</span>全自動OCRパイプライン</a></li>
+      <li><a href="#c-d"><span class="k">D</span>保険・契約管理</a></li>
+      <li><a href="#c-e"><span class="k">E</span>毎日自動ダイジェスト</a></li>
+      <li><a href="#c-f"><span class="k">F</span>決算分析・中期計画</a></li>
+      <li><a href="#c-g"><span class="k">G</span>運用基盤とAI連携</a></li>
+      <li><a href="#c-h"><span class="k">H</span>定型業務のAI化</a></li>
+      <li><a href="#c-i"><span class="k">I</span>SNS運用の半自動化</a></li>
+      <li><a href="#c-j"><span class="k">J</span>外部クライアント案件</a></li>
+      <li><a href="#c-k"><span class="k">K</span>要件定義→実装→検証</a></li>
+      <li><a href="#c-l"><span class="k">L</span>権限と情報開示の設計</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="summary">
+      <h2 class="sec">実績サマリー</h2>
+      <p class="sec-note">領域ごとに、何を作って何が変わったか。詳細は下のケースに続きます。</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>領域</th><th>構築したもの</th><th>主な効果</th></tr></thead>
+          <tbody>
+            <tr><td class="field">台帳・期日管理</td><td>約220名の管理台帳を一元化し、期日計算からアラート・バックアップまで自動化</td><td>抜け漏れゼロ・担当1名で全体統制</td></tr>
+            <tr><td class="field">複雑帳票の自動生成</td><td>数百列の行政帳票を入力シートから自動組み立て＋テンプレ機械照合</td><td>数時間 → 数分</td></tr>
+            <tr><td class="field">OCRパイプライン</td><td>PDFを入れるだけで文字起こし→台帳照合→命名→格納→台帳更新</td><td>目視転記の撲滅・24時間無人運用</td></tr>
+            <tr><td class="field">保険・契約管理</td><td>満了・更新・加入漏れ・意思未確定を自動検知し、案内文まで下書き</td><td>期限超過の事前防止</td></tr>
+            <tr><td class="field">情報収集</td><td>外部情報を毎日自動収集し、AI分析のうえ関係者へ自動配信</td><td>キャッチアップの仕組み化</td></tr>
+            <tr><td class="field">データ分析</td><td>複数期の決算を横断分析し、中期計画のたたき台まで作成</td><td>数字で意思決定できる状態に</td></tr>
+            <tr><td class="field">運用基盤</td><td>定期実行・Webアプリ・MCP連携で「放置しても回る」実行基盤を整備</td><td>無人運用・棚卸しの自動化</td></tr>
+            <tr><td class="field">要件定義</td><td>開発着手前のドキュメント一式を作成し、実装と受け入れテストまで接続</td><td>着手前の手戻りを削減</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="cases">
+      <h2 class="sec">実績ケース</h2>
+      <p class="sec-note">ケースK・Lは実際に触れます。「動くデモを開く」から、その場で操作できる状態にしてあります（架空データによる自主制作サンプル）。</p>
+
+      <article class="case" id="c-a">
+        <div class="case-head"><span class="case-id">A</span><h3>約220名の管理台帳を一元化、期日管理を完全自動化</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">数十列の台帳</span><span class="arw">→</span>
+            <span class="step">期日を自動計算</span><span class="arw">→</span>
+            <span class="step hi">最短の期日を1列に集約</span><span class="arw">→</span>
+            <span class="step">毎朝アラート送信</span><span class="arw">→</span>
+            <span class="step">要確認シートを生成</span>
+          </div>
+          <figcaption>人が毎日追っていた約220名分の期日チェックが、見なくても回る状態に。</figcaption>
+        </figure>
+        <div class="ba">
+          <div class="before"><span class="lbl">BEFORE</span><p>有資格者ごとに異なる複数の期日を、人の記憶と手作業で管理。台帳は数十列に及び、「誰の・どの期日が・いつ来るか」を毎日人が追う必要があり、抜け漏れリスクが常態化していました。</p></div>
+        </div>
+        <ul class="did">
+          <li>期日の自動計算ロジックを台帳に実装（基準日が空欄なら別の基準日から逆算する分岐まで）</li>
+          <li>複数の期日から条件に応じた「最短の期日」を自動算出し、1列に集約</li>
+          <li>該当者を毎朝アラートメールで自動通知</li>
+          <li>「今、対応が必要な人」だけを抽出した要確認シートを自動生成し、結果を台帳へ書き戻し</li>
+          <li>自動バックアップを整備し、事故時に復元できる状態に</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>約220名分の期日チェックが、人が見なくても回る状態に。担当1名で部門全体を統制できるようになりました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Apps Script・スプレッドシート・Gmail自動送信。表記ゆれで数式が不発になるといった現場特有の落とし穴を運用ルール化し、壊れない・気づける設計にしています。</p>
+      </article>
+
+      <article class="case" id="c-b">
+        <div class="case-head"><span class="case-id">B</span><h3>数百列の申請帳票を「入力するだけ」で自動生成</h3></div>
+        <figure class="viz">
+          <div class="metric">
+            <div class="m-row"><span class="m-lab">従来</span><span class="m-track"><span class="m-fill b" style="--w:100%"></span></span><span class="m-val"><b>数時間</b> ／ 1件</span></div>
+            <div class="m-row"><span class="m-lab">導入後</span><span class="m-track"><span class="m-fill a" style="--w:7%"></span></span><span class="m-val"><b>数分</b> ／ 1件</span></div>
+          </div>
+          <figcaption>1件あたり数百列の行政帳票。入力シートから自動組み立てし、公式テンプレートと機械照合。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>行政提出用の帳票が1件あたり数百列規模。手作業では1件に数時間かかり、転記ミスも発生。申請の種別ごとにルールが異なり、属人化していました。</p></div></div>
+        <ul class="did">
+          <li>シンプルな入力シートから帳票を自動組み立てするスクリプトを構築</li>
+          <li>公式テンプレートと列数・項目名を機械照合し、ズレを自動検知</li>
+          <li>複数の申請種別に対応した分岐ロジックを実装</li>
+          <li>説明書類など付随ドキュメントも同じ入力から一式まとめて生成</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>帳票作成を数時間から数分に短縮。提出前の手戻りを大幅に削減しました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Python・openpyxl・スプレッドシート連携。「作ってから違った」を防ぐため、件数・列数・挙動を機械で照合してから納めることを徹底しています。</p>
+      </article>
+
+      <article class="case" id="c-c">
+        <div class="case-head"><span class="case-id">C</span><h3>「PDFを入れるだけ」の全自動OCRパイプライン</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step hi">PDFを投入</span><span class="arw">→</span>
+            <span class="step">OCRで文字起こし</span><span class="arw">→</span>
+            <span class="step">台帳から本人を逆引き照合</span><span class="arw">→</span>
+            <span class="step">自動リネーム・格納</span><span class="arw">→</span>
+            <span class="step">台帳を更新</span>
+          </div>
+          <div class="flow" style="margin-top:9px;">
+            <span class="arw">照合できない場合</span><span class="arw">→</span>
+            <span class="step stop">自動で隔離して通知（先へ進めない）</span>
+          </div>
+          <figcaption>24時間の自動監視。人が触るのは投入だけで、あとは無人で完了します。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>証明書・カード類のPDFを人が目で読んで台帳に手転記。同姓同名の取り違えリスクもあり、処理のたびに人が張り付く必要がありました。</p></div></div>
+        <ul class="did">
+          <li>投入フォルダを24時間自動監視し、新しいファイルが入ると自動で処理開始</li>
+          <li>OCRで文字起こし後、台帳から本人を逆引き照合（生年月日などでクロスチェック）</li>
+          <li>規則的に自動リネームし、種別・年度ごとのフォルダへ自動格納</li>
+          <li>台帳の該当列を自動更新</li>
+          <li>照合できなかったファイルは自動で隔離＋通知し、事故を止める</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>投入するだけで全工程が自動完了。転記・仕分け・台帳更新の手作業を撲滅し、無人で回る運用にしました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Python・OCR・フォルダ自動監視。「うまくいったものだけ進める、怪しいものは必ず止めて知らせる」という安全側の設計です。</p>
+      </article>
+
+      <article class="case" id="c-d">
+        <div class="case-head"><span class="case-id">D</span><h3>保険・契約管理の自動化（27名規模）</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="arw">検知するタイミング</span>
+            <span class="step hi">満了60日前</span><span class="arw">→</span>
+            <span class="step hi">30日前</span><span class="arw">→</span>
+            <span class="step stop">期限超過</span>
+          </div>
+          <div class="flow" style="margin-top:9px;">
+            <span class="arw">あわせて検知</span>
+            <span class="step">加入漏れ</span>
+            <span class="step">更新意思の未確定</span>
+            <span class="step">オプション補償の抜け</span>
+          </div>
+          <figcaption>期限が来る前に検知し、企業別の更新案内文を下書きまで自動生成します。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>加入・満了・更新の期限が個人ごとにバラバラで、漏れが起きやすい状態。誰がいつ更新かを人が突き合わせており、期限超過のリスクがありました。</p></div></div>
+        <ul class="did">
+          <li>満了60日前・30日前、期限超過、加入漏れ、更新意思の未確定を自動で炙り出し</li>
+          <li>オプション補償の未加入など、補償の抜けも自動チェック</li>
+          <li>企業別の更新案内文面を下書きまで自動生成</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>期限超過を事前に検知。残り日数つきで「今、動くべき人」が一覧化される運用になりました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Apps Script・スプレッドシート。既存台帳にタブを1枚足すだけで導入できる、低負担な組み込みを意識しています。</p>
+      </article>
+
+      <article class="case" id="c-e">
+        <div class="case-head"><span class="case-id">E</span><h3>外部情報・社内ネタの毎日自動ダイジェスト配信</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">毎日決まった時刻に自動収集</span><span class="arw">→</span>
+            <span class="step hi">AIで分析（機会とリスク＋活かし方）</span><span class="arw">→</span>
+            <span class="step">個人情報を匿名化</span><span class="arw">→</span>
+            <span class="step">関係者へ自動配信</span>
+          </div>
+          <figcaption>人が動かなくても、判断材料が毎朝そろっている状態にしました。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>業界情報や社内の改善アイデアが「集まらない・分析されない・共有されない」状態。キャッチアップが個人の頑張り任せで続きませんでした。</p></div></div>
+        <ul class="did">
+          <li>外部情報ソースを毎日決まった時刻に自動収集</li>
+          <li>収集した情報をAIで分析（機会とリスクの両面＋どう活かすかの具体案）</li>
+          <li>社内の改善アイデアを集めるフォームを用意し、優先度スコアで実装順を自動づけ</li>
+          <li>分析結果を関係者へ自動配信。個人情報は送出しない匿名化処理も実装</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>情報収集から分析・共有までが毎日自動で回る仕組みに。人が動かなくても判断材料が手元に届く状態をつくりました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Python・GAS・生成AI（ヘッドレス実行）・スケジューラ。リトライ処理を入れ、外部サービスが一時的に落ちても止まらない運用にしています。</p>
+      </article>
+
+      <article class="case" id="c-f">
+        <div class="case-head"><span class="case-id">F</span><h3>複数期の決算分析から中期計画のたたき台へ</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">複数期の決算</span><span class="arw">→</span>
+            <span class="step">横断分析</span><span class="arw">→</span>
+            <span class="step">収益構造の論点を抽出</span><span class="arw">→</span>
+            <span class="step hi">中期経営計画の素案</span>
+          </div>
+          <figcaption>あわせて「人力 vs AI化」の工数比較表を作り、効率化の効果も数字にしました。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>数字はあるが「何が効いているか」が見えず、打ち手を決めきれない状態でした。</p></div></div>
+        <ul class="did">
+          <li>複数期の決算を横断分析し、収益構造の論点を抽出</li>
+          <li>課題を数字で可視化し、中期経営計画の素案まで作成</li>
+          <li>「人力 vs AI化」の工数比較表を作り、効率化の効果を見える化</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>感覚で語っていた経営課題を、数字で議論できる状態に。投資判断・優先順位づけの土台をつくりました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Python・データ分析・スプレッドシート。分析して終わりにせず、次の一手まで言語化することを重視しています。</p>
+      </article>
+
+      <article class="case" id="c-g">
+        <div class="case-head"><span class="case-id">G</span><h3>「放置しても回る」運用基盤とAIツール連携</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">スケジューラ</span>
+            <span class="step">GAS</span>
+            <span class="step">Webアプリ</span>
+            <span class="step">カレンダー</span>
+            <span class="arw">→</span>
+            <span class="step hi">定期実行を1枚に自動棚卸し</span>
+          </div>
+          <figcaption>自動化を増やすほど全体像が見えなくなる問題に、「いつでも棚卸しできる」で対処しました。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>自動化を増やすほど「何が・いつ・どこで動いているか」が分からなくなり、逆に属人化するリスクがありました。</p></div></div>
+        <ul class="did">
+          <li>スケジューラ・GAS・Webアプリ・カレンダーの定期実行を1枚に自動棚卸し</li>
+          <li>生成AIを日常業務に組み込むためのMCP・Webアプリ連携を整備</li>
+          <li>よく使う手順をスキルとして部品化し、再利用できる状態に</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>自動化の全体像がいつでも棚卸しできる状態に。仕組みが増えても運用が破綻しない基盤を整えました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Apps Script・Python・各種API／MCP連携。「増やす」より「回り続ける」を優先した設計です。</p>
+      </article>
+
+      <article class="case" id="c-h">
+        <div class="case-head"><span class="case-id">H</span><h3>定型業務ルーティンのAI化（タスク管理・報告・依頼メール）</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step hi">毎朝「今日やるべき次タスク」を提示</span><span class="arw">→</span>
+            <span class="step">報告文を自動ドラフト</span><span class="arw">→</span>
+            <span class="step">依頼メールを自動生成</span><span class="arw">→</span>
+            <span class="step">稼働時間を自動集計</span>
+          </div>
+          <figcaption>「考える前の準備」をAIが肩代わりし、人は判断だけに集中できる形にしました。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>日々のタスク管理・進捗報告・依頼メール作成など、細かな定型業務が積み重なって時間を圧迫していました。</p></div></div>
+        <ul class="did">
+          <li>タスク管理シートをAIの司令塔にし、毎朝「今日やるべき次タスク」を自動提示</li>
+          <li>月次・週次の振り返りと報告文を分析ベースで自動ドラフト</li>
+          <li>担当者への依頼メールをシートから自動生成（件名・本文・宛先まで型化）</li>
+          <li>稼働時間を自動で計測・記録・集計し、施策ごとの費用対効果を把握</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>定型業務の「考える前の準備」をAIが肩代わり。判断だけに集中できる運用に変えました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　GAS・生成AI・スプレッドシート。人の判断が要る所は人に残す、割り切った線引きをしています。</p>
+      </article>
+
+      <article class="case" id="c-i">
+        <div class="case-head"><span class="case-id">I</span><h3>SNS運用の半自動化</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">情報収集</span><span class="arw">→</span>
+            <span class="step">下書き生成</span><span class="arw">→</span>
+            <span class="step">投稿カレンダー</span><span class="arw">→</span>
+            <span class="step hi">反応分析</span><span class="arw">→</span>
+            <span class="step">次のネタへ還元</span>
+          </div>
+          <figcaption>発信の継続を、気合いではなく仕組みで担保する構成です。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>発信を続けたいが「ネタが出ない・続かない・分析されない」状態でした。</p></div></div>
+        <ul class="did">
+          <li>情報収集から下書き生成、投稿カレンダー、反応分析までをパイプライン化</li>
+          <li>実体験・数字ベースのネタが自動で溜まる仕組みを用意</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>発信の継続を気合いではなく仕組みで担保。改善サイクルを回せる状態にしました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Python・GAS・生成AI。</p>
+      </article>
+
+      <article class="case" id="c-j">
+        <div class="case-head"><span class="case-id">J</span><h3>外部クライアントの運賃請求業務を自動化（紹介案件・有償）</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">配送会社から届くデータ</span><span class="arw">→</span>
+            <span class="step">自動で仕分け・集計</span><span class="arw">→</span>
+            <span class="step hi">請求書・仮納品書を自動生成</span>
+          </div>
+          <figcaption>命名規則やフォルダ構成など、先方の運用に合わせた調整も重ねて完遂した有償案件です。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>配送会社から届く運賃データをもとにした請求書作成・仕分け業務が手作業で行われ、月次の締め作業に時間がかかっていました。</p></div></div>
+        <ul class="did">
+          <li>届いたデータを取り込み、自動で仕分け・集計するロジックをGASで構築</li>
+          <li>請求書・仮納品書の自動生成フローを整備し、手作業での転記をなくした</li>
+          <li>ファイル命名規則や格納フォルダ構成など、担当者からの追加要望にも都度対応</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>月次の請求書作成業務を効率化。紹介を通じて受託した外部クライアント案件として、実務を完遂しました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Apps Script。社内向けの自動化とは異なり、外部クライアントとの要望のすり合わせを重ねながら進める実務経験を積みました。</p>
+      </article>
+
+      <article class="case" id="c-k">
+        <div class="case-head">
+          <span class="case-id">K</span>
+          <h3>申請・承認ワークフローを「要件定義 → 実装 → 受け入れテスト」まで一続きで</h3>
+          <a class="live" href="https://script.google.com/macros/s/AKfycbyM_dM8sT_6rUr5Q1rkttKgtzp-r9KYGChuDIfshznpsUDorCnPeXVhb-gJXg-4Bl_JOA/exec" target="_blank" rel="noopener">動くデモを開く →</a>
+        </div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="arw">金額で承認段数が自動で変わる</span>
+            <span class="step">〜10万円：課長のみ</span><span class="arw">→</span>
+            <span class="step">10万円〜：課長＋部長</span><span class="arw">→</span>
+            <span class="step hi">100万円〜：＋代表取締役</span>
+          </div>
+          <figcaption>デモで実際に金額を変えて申請すると、承認ルートが組み替わるところまで確認できます。</figcaption>
+        </figure>
+        <figure class="viz">
+          <div class="metric">
+            <div class="m-row"><span class="m-lab">現状</span><span class="m-track"><span class="m-fill b" style="--w:100%"></span></span><span class="m-val"><b>5</b> 営業日</span></div>
+            <div class="m-row"><span class="m-lab">目標</span><span class="m-track"><span class="m-fill a" style="--w:40%"></span></span><span class="m-val"><b>2</b> 営業日</span></div>
+          </div>
+          <figcaption>申請から最終承認までのリードタイム（成功指標の目標値・案）。この値を測る集計機能まで仕様に含めています。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>紙・Excel・メールに業務が散らばり、情報分散・二重入力・属人化・承認遅延が同時に起きている状態。「何から手をつけるべきか」が決まらず、ツール導入の議論だけが先行しがちでした。</p></div></div>
+        <ul class="did">
+          <li>4つの課題を並列に扱わず、「紙・Excel・メールの併用」という1つの原因から派生した結果として整理</li>
+          <li>着手順を「効果が測定できるかどうか」で決定。承認遅延だけが待ち時間として金額換算できるため1番目に置き、その根拠を明示</li>
+          <li>1番目の業務を要件定義（機能要件6本・受け入れ条件・成功指標・未決事項13件）</li>
+          <li>定義した要件を実際に動くところまで実装（金額しきい値による多段承認、差戻しと再申請、月次台帳出力、リードタイム自動集計）</li>
+          <li>受け入れ条件をそのまま自動テスト化し、実行結果がシートに残る状態に（5件中5件PASS）</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>「要件定義ができます」ではなく「定義した要件がこう動き、条件を満たすことを機械で確認できます」まで示せる状態に。効果測定の仕組みを最初から仕様に含めているため、導入後に「速くなった気がする」以上の評価ができます。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Apps Script・スプレッドシート・Webアプリ。祝日を考慮した営業日計算・メールの実送信・認証基盤はあえて実装せず、確認事項として残しています。推測で埋めた仕様は外れたときに信用を失うため、分からないことは分からないまま、誰にいつ確認するかまで決めて渡すことを重視しています。</p>
+      </article>
+
+      <article class="case" id="c-l">
+        <div class="case-head">
+          <span class="case-id">L</span>
+          <h3>権限と情報開示の設計レビュー</h3>
+          <a class="live" href="https://script.google.com/macros/s/AKfycbx1Qbo56qr2Bf0or0kcVT4EXC5K-aXFNHvyu_JW4DMkh9sNLauZEsLzpvANH_Xd04kiUA/exec" target="_blank" rel="noopener">動くデモを開く →</a>
+        </div>
+        <figure class="viz">
+          <div class="payload">
+            <div class="pl no">
+              <div class="h">マッチング成立前のサーバー応答</div>
+<pre>{
+  "id": "J-001",
+  "title": "空調設備の更新工事",
+  "scope": "全体公開",
+  "status": "募集中"
+}</pre>
+            </div>
+            <div class="pl yes">
+              <div class="h">成立後のサーバー応答</div>
+<pre>{
+  "id": "J-001",
+  "title": "空調設備の更新工事",
+  "scope": "全体公開",
+  "status": "成立",
+<span class="add">  "contactName":  "発注担当A",
+  "contactPhone": "03-0000-0001",
+  "contactEmail": "…@example.com"</span>
+}</pre>
+            </div>
+          </div>
+          <figcaption>成立前は担当者の項目が<b>キーごと存在しません</b>。空文字やマスク（***）で返すと「そこに何かある」と伝わってしまうため、項目自体を落としています。画面を隠すだけの実装との違いはここに出ます。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>生成AIの普及で、非エンジニアでも動く画面を短期間で作れるようになりました。一方で動くことと、商用サービスとして公開してよいことの間には差があり、その差の多くは画面に現れません。権限の境界・個人情報の保持期間・ログの有無・退会時の扱いは、画面上は何も表示されないため「できている」ように見えてしまいます。</p></div></div>
+        <ul class="did">
+          <li>商用公開前に必ず確認すべき項目を「後から追加すると作り直しになるもの」という基準で整理（法務・非機能・事業・設計・運用・契約の6分類）</li>
+          <li>マッチング型サービスで最頻出の事故である「成立前に連絡先が見えてしまう」を、実装で再現・対策</li>
+          <li>対策をマスク文字列ではなく、キーごと落とす方式で実装（マスクだとレスポンスに項目が残り「そこに何かある」と伝わるため）</li>
+          <li>「画面を経由せず編集APIを直接叩く」実演を用意し、画面側の出し分けだけでは権限制御にならないことを可視化</li>
+          <li>受け入れ条件を自動テスト化（6件中6件PASS）。レスポンスにキーが存在しないこと、JSON文字列に電話番号・メールアドレスが混入していないことまで検証</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>レビュー内容を口頭で説明するのではなく、サーバーの生の応答で示せる状態に。「成立後は双方向に開示されるが、成立相手でない第三者には成立後も非開示」といった、実装時に抜けやすい観点まで検証済みです。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Apps Script・Webアプリ。認証基盤・課金・監査ログ・通知・退会時の削除は、要件が未確定のため意図的に実装していません。作らなかった理由を説明できることも、レビュー役の仕事だと考えています。</p>
+      </article>
+    </section>
+
+    <section id="how">
+      <h2 class="sec">進め方・品質へのこだわり</h2>
+      <div class="grid2">
+        <div class="card"><h4>要件を自分の言葉で言い換えて確認</h4><p>「作ってから違った」を防ぐ着手前チェックを徹底します。</p></div>
+        <div class="card"><h4>機械検証してから納める</h4><p>件数・列数・挙動を機械で照合し、目視に頼りません。</p></div>
+        <div class="card"><h4>非エンジニアが回せる設計</h4><p>操作手順・ガイドをセットで用意し、専門知識なしで運用できる状態にします。</p></div>
+        <div class="card"><h4>壊さない変更</h4><p>既存の動いている仕組みに余計な手を入れません。破壊的な操作は必ず事前確認します。</p></div>
+        <div class="card"><h4>安全側の運用</h4><p>怪しいデータは必ず止めて通知。失敗しても事故に至らせません。</p></div>
+        <div class="card"><h4>個人情報・機密の分離</h4><p>氏名・番号などの機微情報はコードから切り離して扱います。</p></div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <h2 class="sec">技術スタック・対応領域</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>領域</th><th>使うもの</th></tr></thead>
+          <tbody>
+            <tr><td class="field">自動化・帳票</td><td>Google Apps Script／Googleスプレッドシート・ドライブ</td></tr>
+            <tr><td class="field">スクリプト</td><td>Python（データ処理・OCR・帳票生成・分析）</td></tr>
+            <tr><td class="field">OCR</td><td>画像／PDFの文字起こし＋台帳照合＋自動振り分け</td></tr>
+            <tr><td class="field">連携・運用</td><td>定期実行・メール自動送信・フォルダ自動監視・Webアプリ・MCP連携</td></tr>
+            <tr><td class="field">要件定義</td><td>PRD・機能要件・受け入れ条件・未決事項の整理と、実装／テストへの接続</td></tr>
+            <tr><td class="field">AI活用</td><td>生成AIを業務に組み込む設計・ヘッドレス実行・社内教育</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="fit">
+      <h2 class="sec">こんな課題に効きます</h2>
+      <ul class="did">
+        <li>台帳・期日管理が属人化していて、抜け漏れが怖い</li>
+        <li>同じ書類を毎回手作業で作っていて、時間も神経も使う</li>
+        <li>PDFや紙の情報を、人が目で読んで転記している</li>
+        <li>更新・満了などの期限管理が漏れやすい</li>
+        <li>数字はあるのに、意思決定に使える形になっていない</li>
+        <li>AIを使いたいが、何から手をつければいいか分からない</li>
+        <li>開発を頼みたいが、そもそも要件が固まっていない</li>
+      </ul>
+      <p class="sec-note" style="margin-top:18px;">「専任エンジニアを雇うほどではないが、現場の手作業はなんとかしたい」——そんな中小企業・部門の最初の一歩を担当します。</p>
+    </section>
+
+
+  </main>
+</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>本資料の実績はすべて匿名化しています。</strong>具体的な企業名・個人情報は含みません。ケースK・Lのデモは架空データによる自主制作サンプルであり、特定のお客様の実データを用いたものではありません。</p>
+    <p>ご連絡・ご相談は、ご覧いただいているクラウドソーシングプラットフォームのメッセージ機能からお願いします。本ページに連絡先は掲載していません。</p>
+  </div>
+</footer>
