@@ -452,7 +452,7 @@
       <li><a href="#c-g"><span class="k">G</span>運用基盤とAI連携</a></li>
       <li><a href="#c-h"><span class="k">H</span>定型業務のAI化</a></li>
       <li><a href="#c-i"><span class="k">I</span>SNS運用の半自動化</a></li>
-      <li><a href="#c-j"><span class="k">J</span>外部クライアント案件</a></li>
+      <li><a href="#c-j"><span class="k">J</span>複数社帳票OCR＋請求書自動化</a></li>
       <li><a href="#c-k"><span class="k">K</span>要件定義→実装→検証</a></li>
       <li><a href="#c-l"><span class="k">L</span>権限と情報開示の設計</a></li>
     </ol>
@@ -695,23 +695,26 @@
       </article>
 
       <article class="case" id="c-j">
-        <div class="case-head"><span class="case-id">J</span><h3>外部クライアントの運賃請求業務を自動化（紹介案件・有償）</h3></div>
+        <div class="case-head"><span class="case-id">J</span><h3>複数社・多書式の運賃帳票をOCRで自動読取〜請求書生成まで一気通貫（紹介案件・有償）</h3></div>
         <figure class="viz">
           <div class="flow">
-            <span class="step">配送会社から届くデータ</span><span class="arw">→</span>
+            <span class="step">運送会社数社・取引先約50社から届く請求書・納品書</span><span class="arw">→</span>
+            <span class="step hi">OCRで読み取り（書式は各社バラバラ）</span><span class="arw">→</span>
             <span class="step">自動で仕分け・集計</span><span class="arw">→</span>
-            <span class="step hi">請求書・仮納品書を自動生成</span>
+            <span class="step">請求書・仮納品書を自動生成</span>
           </div>
-          <figcaption>命名規則やフォルダ構成など、先方の運用に合わせた調整も重ねて完遂した有償案件です。</figcaption>
+          <figcaption>月600件規模。事前ヒアリング4回・途中経過報告3回を重ねて例外処理を設計し、稼働後2ヶ月間エラー報告なしで運用中です。</figcaption>
         </figure>
-        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>配送会社から届く運賃データをもとにした請求書作成・仕分け業務が手作業で行われ、月次の締め作業に時間がかかっていました。</p></div></div>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>運送会社数社・取引先約50社（個人事業主含む）から届く、書式がバラバラな請求書・納品書をもとにした請求書作成・仕分け業務が手作業で行われ、月次の締め作業に時間がかかっていました。</p></div></div>
         <ul class="did">
-          <li>届いたデータを取り込み、自動で仕分け・集計するロジックをGASで構築</li>
+          <li>各社ごとに異なる書式の請求書・納品書をOCR APIで読み取るパイプラインを構築</li>
+          <li>読み取ったデータを自動で仕分け・集計するロジックをGAS・Claude Codeで実装</li>
           <li>請求書・仮納品書の自動生成フローを整備し、手作業での転記をなくした</li>
+          <li>事前ヒアリングを重ねて例外処理を設計。運用中に配送業者の仕様追加要望が出た際も柔軟に対応</li>
           <li>ファイル命名規則や格納フォルダ構成など、担当者からの追加要望にも都度対応</li>
         </ul>
-        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>月次の請求書作成業務を効率化。紹介を通じて受託した外部クライアント案件として、実務を完遂しました。</p></div></div>
-        <p class="tech"><b>技術／こだわり</b>　Google Apps Script。社内向けの自動化とは異なり、外部クライアントとの要望のすり合わせを重ねながら進める実務経験を積みました。</p>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>月600件規模の処理を、月2時間×2名の手作業から月10分×1名まで圧縮。稼働後2ヶ月間エラー報告なしで運用が続いています。紹介を通じて受託した外部クライアント案件として、実務を完遂しました。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Apps Script・OCR API・Claude Codeによるコーディング。社内向けの自動化とは異なり、外部クライアントとの要望のすり合わせを重ねながら進める実務経験を積みました。</p>
       </article>
 
       <article class="case" id="c-k">
