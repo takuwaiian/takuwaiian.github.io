@@ -455,6 +455,7 @@
       <li><a href="#c-j"><span class="k">J</span>複数社帳票OCR＋請求書自動化</a></li>
       <li><a href="#c-k"><span class="k">K</span>要件定義→実装→検証</a></li>
       <li><a href="#c-l"><span class="k">L</span>権限と情報開示の設計</a></li>
+      <li><a href="#c-m"><span class="k">M</span>メール起点の案件管理・要件定義</a></li>
     </ol>
   </nav>
 
@@ -793,6 +794,39 @@
         </ul>
         <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>レビュー内容を口頭で説明するのではなく、サーバーの生の応答で示せる状態に。「成立後は双方向に開示されるが、成立相手でない第三者には成立後も非開示」といった、実装時に抜けやすい観点まで検証済みです。</p></div></div>
         <p class="tech"><b>技術／こだわり</b>　Google Apps Script・Webアプリ。認証基盤・課金・監査ログ・通知・退会時の削除は、要件が未確定のため意図的に実装していません。作らなかった理由を説明できることも、レビュー役の仕事だと考えています。</p>
+      </article>
+
+      <article class="case" id="c-m">
+        <div class="case-head">
+          <span class="case-id">M</span>
+          <h3>メールに埋もれる案件情報を、要件定義から仕様に落とし込む</h3>
+        </div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">現場・問い合わせメールが届く</span><span class="arw">→</span>
+            <span class="step hi">現場名・工期目安・概算予算・連絡先を自動抽出</span><span class="arw">→</span>
+            <span class="step">表記ゆれ候補を提示（人が確認）</span><span class="arw">→</span>
+            <span class="step">案件管理シートへ反映</span>
+          </div>
+          <figcaption>抽出に失敗した項目は空欄のまま「要確認」フラグを立てる設計。推測で埋めて後工程に誤情報を流さないことを優先しています。</figcaption>
+        </figure>
+        <figure class="viz">
+          <div class="metric">
+            <div class="m-row"><span class="m-lab">現状</span><span class="m-track"><span class="m-fill b" style="--w:100%"></span></span><span class="m-val"><b>5</b> 分／件</span></div>
+            <div class="m-row"><span class="m-lab">目標</span><span class="m-track"><span class="m-fill a" style="--w:20%"></span></span><span class="m-val"><b>1</b> 分／件</span></div>
+          </div>
+          <figcaption>案件情報の転記1件あたりの所要時間（目標値・案）。実測値はヒアリングで確定する前提です。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>現場担当者・問い合わせ元とのやり取りがメール中心で、案件数の増加に事務担当の処理速度が追いつかない状態。見積書PDFの読み取りやDrive内ファイルの仕分けなど、周辺業務も含めると着手範囲が絞れていませんでした。</p></div></div>
+        <ul class="did">
+          <li>複数ある業務課題のうち、着手優先度が最も高い「メールからの案件情報抽出→シート反映」を先行実装スコープとして選定し、その根拠を明示</li>
+          <li>機能要件7本・非機能要件3本・ユーザーストーリー4本・受け入れ条件6本まで要件定義を落とし込み</li>
+          <li>抽出できなかった項目を推測で埋めず「要確認」フラグを立てる設計や、現場名の表記ゆれを人の確認を挟んで吸収する設計など、誤情報を後工程に流さないための仕組みを明記</li>
+          <li>画面遷移6画面・テスト観点5件（正常系・異常系・境界値）・リスク3件・未決事項6件まで一式を整理</li>
+          <li>ヒアリング未実施の段階のため、確定させず「未決事項」として全量を可視化し、着手前に確認すべき論点として渡す設計</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>「要件定義ができます」ではなく、公開情報だけから実際に1本分の仕様書に落とし込んだ状態で示せるように。着手前の段階でも、着手後の会話を前に進められる形にしています。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Workspace（Gmail・スプレッドシート）・GAS・生成AIによる情報抽出を想定した要件定義。ヒアリング未実施の段階のため実装・デモは行わず、未決事項を隠さず全量提示することを優先しています。</p>
       </article>
     </section>
 
