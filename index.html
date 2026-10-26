@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI業務自動化 実績集</title>
 <style>
   :root{
@@ -430,10 +432,10 @@
     <dl class="facts">
       <div class="fact"><dt>構築・運用したシステム</dt><dd>20件以上</dd></div>
       <div class="fact"><dt>台帳で管理する対象者</dt><dd>約220名</dd></div>
-      <div class="fact"><dt>外部クライアント案件</dt><dd>有償で完遂</dd></div>
+      <div class="fact"><dt>外部クライアント案件</dt><dd>有償で完遂・2社に伴走中</dd></div>
       <div class="fact"><dt>動かせるデモ</dt><dd>2件</dd></div>
     </dl>
-    <p class="stamp">作成：2026年7月／最終更新：2026年8月　｜　対象領域：GAS・Python・OCR・生成AI・業務フロー設計</p>
+    <p class="stamp">作成：2026年7月／最終更新：2026年10月　｜　対象領域：GAS・Python・OCR・生成AI・業務フロー設計</p>
   </div>
 </header>
 
@@ -456,6 +458,10 @@
       <li><a href="#c-k"><span class="k">K</span>要件定義→実装→検証</a></li>
       <li><a href="#c-l"><span class="k">L</span>権限と情報開示の設計</a></li>
       <li><a href="#c-m"><span class="k">M</span>メール起点の案件管理・要件定義</a></li>
+<li><a href="#c-n"><span class="k">N</span>請求書の自動起票・突合</a></li>
+<li><a href="#c-o"><span class="k">O</span>営業リストの一元化</a></li>
+<li><a href="#c-p"><span class="k">P</span>動画生成（PV・PR動画）</a></li>
+<li><a href="#c-q"><span class="k">Q</span>中小企業2社に伴走（進行中）</a></li>
     </ol>
   </nav>
 
@@ -475,7 +481,11 @@
             <tr><td class="field">情報収集</td><td>外部情報を毎日自動収集し、AI分析のうえ関係者へ自動配信</td><td>キャッチアップの仕組み化</td></tr>
             <tr><td class="field">データ分析</td><td>複数期の決算を横断分析し、中期計画のたたき台まで作成</td><td>数字で意思決定できる状態に</td></tr>
             <tr><td class="field">運用基盤</td><td>定期実行・Webアプリ・MCP連携で「放置しても回る」実行基盤を整備</td><td>無人運用・棚卸しの自動化</td></tr>
-            <tr><td class="field">要件定義</td><td>開発着手前のドキュメント一式を作成し、実装と受け入れテストまで接続</td><td>着手前の手戻りを削減</td></tr>
+            <tr><td class="field">経理</td><td>月次の元帳と発行済み請求書を突合し、差異だけを人が確認する形へ</td><td>目視照合の削減（並走で検証中）</td></tr>
+<tr><td class="field">営業</td><td>3,000社超のリストを担当者ごとに1本化し、メール・架電・FAXを振り分け</td><td>「次に誰が何をするか」が一目で分かる</td></tr>
+<tr><td class="field">動画生成</td><td>企業紹介PVと業界別PR動画を企画から公開まで制作（日本語・ベトナム語字幕）</td><td>外注なしで需要確認ができる</td></tr>
+<tr><td class="field">他社の課題に伴走</td><td>運送業・建設業の2社のAI活用を月次で伴走（進行中）</td><td>費用と範囲を先に合意して着手</td></tr>
+<tr><td class="field">要件定義</td><td>開発着手前のドキュメント一式を作成し、実装と受け入れテストまで接続</td><td>着手前の手戻りを削減</td></tr>
           </tbody>
         </table>
       </div>
@@ -691,7 +701,7 @@
           <li>情報収集から下書き生成、投稿カレンダー、反応分析までをパイプライン化</li>
           <li>実体験・数字ベースのネタが自動で溜まる仕組みを用意</li>
         </ul>
-        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>発信の継続を気合いではなく仕組みで担保。改善サイクルを回せる状態にしました。</p></div></div>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>発信の継続を気合いではなく仕組みで担保。分析を回した結果、1投稿が約7,000回表示・プロフィールアクセス約100件に伸び、フォロワーも約1か月でほぼ倍増しました。要因を整理して次の施策に反映しています（継続中）。</p></div></div>
         <p class="tech"><b>技術／こだわり</b>　Python・GAS・生成AI。</p>
       </article>
 
@@ -828,6 +838,84 @@
         <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>「要件定義ができます」ではなく、公開情報だけから実際に1本分の仕様書に落とし込んだ状態で示せるように。着手前の段階でも、着手後の会話を前に進められる形にしています。</p></div></div>
         <p class="tech"><b>技術／こだわり</b>　Google Workspace（Gmail・スプレッドシート）・GAS・生成AIによる情報抽出を想定した要件定義。ヒアリング未実施の段階のため実装・デモは行わず、未決事項を隠さず全量提示することを優先しています。</p>
       </article>
+
+      <article class="case" id="c-n">
+        <div class="case-head"><span class="case-id">N</span><h3>請求書の自動起票と、元帳・発行済み請求書の突合</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">月次の請求元帳</span><span class="arw">→</span><span class="step">請求書を自動起票</span><span class="arw">→</span><span class="step hi">発行済み請求書PDFと突合</span><span class="arw">→</span><span class="step">差異だけ人が確認</span>
+          </div>
+          <figcaption>全件を目で見比べるのをやめ、「一致」「請求しない判定どおり」「翌月に確認」に自動で仕分けて、人は差異だけを見る構成です。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>請求書の起票と元帳との照合が担当者の手作業に寄っており、引き継ぎそのものが負担でした。</p></div></div>
+        <ul class="did">
+          <li>月次の元帳13件と、発行済み請求書21通（文字を読めるPDF）を突合し、一致・請求しない判定どおり・翌月確認の3種類に仕分け</li>
+          <li>「請求しない項目」の判定ルールをコード化し、元帳との食い違いが出たものだけを拾う設計</li>
+          <li>突合の過程で見つかった食い違い（証明手数料の数量の数え方など）を修正し、担当者から「理解に相違なし」の確認を得てから次へ進める手順</li>
+          <li>定型明細の自動生成の試走（旧T08）も統合し、起票までを一本の流れに</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>10月発行分から現行の運用と並走し、差異だけを確認する形へ移行中です（切り替えは並走の結果を見てから）。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Python・GAS・スプレッドシート。金額や取引先は出さず、「判定どおりか」を機械で確かめられることを優先しています。</p>
+      </article>
+
+      <article class="case" id="c-o">
+        <div class="case-head"><span class="case-id">O</span><h3>営業リストの一元化と、メール・架電・FAXの振り分け</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">見込み企業リスト</span><span class="arw">→</span><span class="step">FAX・メールを補完</span><span class="arw">→</span><span class="step">NGリスト・既存先と突合</span><span class="arw">→</span><span class="step hi">担当者ごとに1本化</span><span class="arw">→</span><span class="step">送信・架電・返信を記録</span>
+          </div>
+          <figcaption>「誰が・どの手段で・次に何をするか」を1枚のリストで見えるようにした構成です。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>見込み企業リストが担当者や手段ごとに散らばり、連絡済みか未着手かを追うだけで時間がかかっていました。</p></div></div>
+        <ul class="did">
+          <li>3,000社超のリストにFAX・メールの連絡先を補完し、社内NGリストや既存取引先との突合まで実施</li>
+          <li>担当者ごとに1本化（上段＝メール送信先、下段＝架電・フォーム）。担当者が空欄だった分は均等に割り振り</li>
+          <li>メールが使えない先は取消線で示し、次の手（架電・FAX）へ自動で回す。送信済みなのに送信日が空欄の行は赤表示</li>
+          <li>重複・要確認の判定とステータスの整合チェックをスクリプト化</li>
+          <li>AIシステム構築を入口にしたアプローチ（運送業向けデモ・初回無料の案内）の送信と返信の記録も同じ表で管理</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>返信をいただいた先との訪問が決まるところまで進んでいます（結果はこれからです）。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google スプレッドシート・GAS・Python。メールが使えない先に送らない、といった「やってはいけないこと」を仕組みで止めることを優先しています。</p>
+      </article>
+
+      <article class="case" id="c-p">
+        <div class="case-head"><span class="case-id">P</span><h3>動画生成で、企業紹介PV・業界別PR動画を企画から公開まで</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">カット表・ナレーション設計</span><span class="arw">→</span><span class="step">画像・動画を生成</span><span class="arw">→</span><span class="step">字幕・BGMを合わせる</span><span class="arw">→</span><span class="step hi">日本語版・ベトナム語字幕版</span><span class="arw">→</span><span class="step">限定公開→意見を回収</span>
+          </div>
+          <figcaption>作って終わりにせず、見てもらった意見を次の制作の手順に戻すところまでを一続きにしています。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>企業紹介や採用の動画は、「まず需要があるか」を確かめる段階でも、撮影や外注の費用と時間がかかる状態でした。</p></div></div>
+        <ul class="did">
+          <li>企業紹介PV（約43秒）を、構成設計から完成まで一人で制作</li>
+          <li>業界別のPR動画を2本制作し、YouTubeに限定公開。日本語版とベトナム語字幕版を用意</li>
+          <li>現場として不自然な描写がないかを10の基準で検品しながら、カット表とナレーションを設計</li>
+          <li>実写風のポスターから10秒の動画を生成し、テロップは動きのある文字演出で作り直し</li>
+          <li>社内から集めた感想をもとに、制作前のヒアリング項目に「訴求の軸を先に詰める」を追加</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>社内の感想は「1本目より2本目のほうが質が上がった」。受入れ企業の需要確認を続けています（売上や成約はまだありません）。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　生成AI（画像・動画・音楽）・HyperFrames・ffmpeg。AIの出力をそのまま使わず、検品の基準を先に決めてから作ることを優先しています。</p>
+      </article>
+
+      <article class="case" id="c-q">
+        <div class="case-head"><span class="case-id">Q</span><h3>中小企業2社のAI活用に伴走（運送業・建設業／進行中）</h3></div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">運送業：手書き日報の写真</span><span class="arw">→</span><span class="step hi">AIで読み取り</span><span class="arw">→</span><span class="step">Excelへ反映</span><span class="arw">→</span><span class="step">請求の突合</span>
+          </div>
+          <figcaption>建設業の1社では、足場工事の見積づくりの自動化に向けて、要件と優先順位を整理しています。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>運送業では手書き日報の転記と請求の突合が、建設業では見積づくりが、それぞれ手作業で時間を取っていました。</p></div></div>
+        <ul class="did">
+          <li>運送業：実際の日報3枚でAIの読み取り精度を確かめ、1枚あたりの利用料が約0.1円であることを確認。残りは、先方の設定と手入力の記録簿の準備待ち</li>
+          <li>運送業：AIの利用料が従量課金で発生することを説明し、前払い方式で合意</li>
+          <li>建設業：月次の稼働枠と優先順位を決め、連絡はメール中心・事務局を共有に入れる運用で合意。先方の資料提供を待って着手</li>
+          <li>毎月、稼働時間の内訳と次の作業を報告する型を作り、先方が判断しやすい形に</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>まだ「できました」と言える段階ではありません。進めながら、できたことだけをここに追記します。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　Google Workspace・生成AI（読み取り）・GAS。先方の実データは載せず、費用と範囲を先に合意することを優先しています。</p>
+      </article>
     </section>
 
     <section id="how">
@@ -869,6 +957,8 @@
         <li>数字はあるのに、意思決定に使える形になっていない</li>
         <li>AIを使いたいが、何から手をつければいいか分からない</li>
         <li>開発を頼みたいが、そもそも要件が固まっていない</li>
+        <li>営業リストや請求の突合が散らばり、「次に何をするか」を追うだけで時間がかかる</li>
+        <li>動画や資料をAIで作りたいが、品質の基準が決まっていない</li>
       </ul>
       <p class="sec-note" style="margin-top:18px;">「専任エンジニアを雇うほどではないが、現場の手作業はなんとかしたい」——そんな中小企業・部門の最初の一歩を担当します。</p>
     </section>
