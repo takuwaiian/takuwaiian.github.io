@@ -433,9 +433,9 @@
       <div class="fact"><dt>構築・運用したシステム</dt><dd>20件以上</dd></div>
       <div class="fact"><dt>台帳で管理する対象者</dt><dd>約220名</dd></div>
       <div class="fact"><dt>外部クライアント案件</dt><dd>有償で完遂・2社に伴走中</dd></div>
-      <div class="fact"><dt>動かせるデモ</dt><dd>2件</dd></div>
+      <div class="fact"><dt>動かせるデモ</dt><dd>3件</dd></div>
     </dl>
-    <p class="stamp">作成：2026年7月／最終更新：2026年10月　｜　対象領域：GAS・Python・OCR・生成AI・業務フロー設計</p>
+    <p class="stamp">作成：2026年7月／最終更新：2026年11月　｜　対象領域：GAS・Python・OCR・生成AI・業務フロー設計</p>
   </div>
 </header>
 
@@ -462,6 +462,7 @@
 <li><a href="#c-o"><span class="k">O</span>営業リストの一元化</a></li>
 <li><a href="#c-p"><span class="k">P</span>動画生成（PV・PR動画）</a></li>
 <li><a href="#c-q"><span class="k">Q</span>中小企業2社に伴走（進行中）</a></li>
+<li><a href="#c-r"><span class="k">R</span>LINE問い合わせのAI下書き</a></li>
     </ol>
   </nav>
 
@@ -493,7 +494,7 @@
 
     <section id="cases">
       <h2 class="sec">実績ケース</h2>
-      <p class="sec-note">ケースK・Lは実際に触れます。「動くデモを開く」から、その場で操作できる状態にしてあります（架空データによる自主制作サンプル）。</p>
+      <p class="sec-note">ケースK・L・Rは実際に触れます。「動くデモを開く」から、その場で操作できる状態にしてあります（架空データによる自主制作サンプル）。</p>
 
       <article class="case" id="c-a">
         <div class="case-head"><span class="case-id">A</span><h3>約220名の管理台帳を一元化、期日管理を完全自動化</h3></div>
@@ -915,6 +916,35 @@
         <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>まだ「できました」と言える段階ではありません。進めながら、できたことだけをここに追記します。</p></div></div>
         <p class="tech"><b>技術／こだわり</b>　Google Workspace・生成AI（読み取り）・GAS。先方の実データは載せず、費用と範囲を先に合意することを優先しています。</p>
       </article>
+
+      <article class="case" id="c-r">
+        <div class="case-head">
+          <span class="case-id">R</span>
+          <h3>LINEの問い合わせをAIが分類し、返信の下書きまで。送るのは人が確認してから</h3>
+          <a class="live" href="line-ai-demo/">動くデモを開く →</a>
+        </div>
+        <figure class="viz">
+          <div class="flow">
+            <span class="step">署名を確かめる</span><span class="arw">→</span>
+            <span class="step hi">個人情報を伏せ字にする</span><span class="arw">→</span>
+            <span class="step">AIが分類・下書き</span><span class="arw">→</span>
+            <span class="step hi">応答を検査する</span><span class="arw">→</span>
+            <span class="step">台帳に記録し、人が確認して送信</span>
+          </div>
+          <figcaption>デモでは、改ざんした通信や、AIが約束ごとを破った応答を実際に流して、止まるところまで確認できます。</figcaption>
+        </figure>
+        <div class="ba"><div class="before"><span class="lbl">BEFORE</span><p>LINEに届く問い合わせを担当者が1件ずつ読み、分類し、返信を一から書いている想定です。AIに任せたい一方で、お客様の情報をAIへそのまま渡すことや、AIが誤った返信を送ることへの不安が残ります。</p></div></div>
+        <ul class="did">
+          <li>届いた通信の署名を確かめ、合わないものは中身を読まずに捨てる</li>
+          <li>電話番号・メール・郵便番号・番地を、AIへ渡す前と台帳へ書く前に伏せ字にする</li>
+          <li>AIの応答を検査し、形が崩れたもの、金額や訪問を約束したもの、リンク入りのものは使わない</li>
+          <li>クレームはAIの下書きを使わず責任者へ、至急は当番へ振り分ける</li>
+          <li>送信は、担当者が確認したときだけ記録される。二重送信は受け付けない</li>
+          <li>受け入れ条件を自動テストにし、デモ画面の中で実行し直せる状態に（24件中24件合格）</li>
+        </ul>
+        <div class="ba"><div class="after"><span class="lbl">AFTER</span><p>担当者の仕事が「読む・分類する・書く」から「確認して直す」に変わる形を、操作できる状態で示しています。AIが間違えたときに、どこで止まり、誰の手に回るかまで画面で追えます。</p></div></div>
+        <p class="tech"><b>技術／こだわり</b>　JavaScript（判定ロジックはGoogle Apps Script・ブラウザ・Node.jsで共通）・LINE Messaging APIと生成AIのAPIを想定した設計。公開デモのためLINEと生成AIには実際にはつないでおらず、受信とAIの応答は画面内で模擬しています。鍵はスクリプトプロパティに置く前提で、Apps Script側のコードは設計の見本として公開しています。氏名の伏せ字と、署名を確かめる中継は作っておらず、確認事項として残しています。</p>
+      </article>
     </section>
 
     <section id="how">
@@ -969,7 +999,7 @@
 
 <footer>
   <div class="wrap">
-    <p><strong>本資料の実績はすべて匿名化しています。</strong>具体的な企業名・個人情報は含みません。ケースK・Lのデモは架空データによる自主制作サンプルであり、特定のお客様の実データを用いたものではありません。</p>
+    <p><strong>本資料の実績はすべて匿名化しています。</strong>具体的な企業名・個人情報は含みません。ケースK・L・Rのデモは架空データによる自主制作サンプルであり、特定のお客様の実データを用いたものではありません。</p>
     <p>ご連絡・ご相談は、ご覧いただいているクラウドソーシングプラットフォームのメッセージ機能からお願いします。本ページに連絡先は掲載していません。</p>
   </div>
 </footer>
