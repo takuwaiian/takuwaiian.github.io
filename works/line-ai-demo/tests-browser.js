@@ -1,4 +1,4 @@
-/* 画面の中で実行するテスト。Node.js 版（core.test.js）と同じ24件・同じ番号。 */
+/* 画面の中で実行するテスト。Node.js 版（core.test.js）も、このファイルをそのまま読み込んで実行する。 */
 (function (root) {
   'use strict';
   function run(C, hmac) {
@@ -19,8 +19,9 @@
       ['T04 伏せ字：空や未定義でも落ちない', function () {
         return C.maskPII(undefined).text === '' && C.maskPII('').text === '';
       }],
-      ['T09 指示文：伏せ字前の個人情報が入らない', function () {
-        return C.buildPrompt(C.maskPII('090-0000-0000 に電話ください').text).indexOf('090-0000-0000') === -1;
+      ['T09 指示文：伏せ字を通した本文に、書き方を変えた電話番号・メールが残らない', function () {
+        var q = C.buildPrompt(C.maskPII('(03)0000-0000 か 090.0000.0000、ＴＥＬ：０３．００００．００００、a.b@example.co.jp まで').text);
+        return !/0000|００００|example/.test(q);
       }],
       ['T10 AI応答：正しい形は通る', function () {
         var r = C.parseAiResponse('{"category":"見積依頼","urgent":false,"draft":"確認して折り返します。"}');
@@ -75,9 +76,56 @@
         return C.approve(row, '', '文', 't2').ok === false && C.approve(row, '佐藤', '  ', 't2').ok === false &&
           done.row.status === '送信済み' && done.row.draft === '直した文' && row.status === '確認待ち';
       }],
-      ['T24 送信：送信済みの行は二重に送れない', function () {
+      ['T24 送信：送信済みになった行を、もう一度承認しても通らない', function () {
         var row = C.buildLedgerRow('Q-003', 't', '本文', p, C.decideRoute(p));
-        return C.approve(C.approve(row, '佐藤', '文', 't2').row, '佐藤', '文', 't3').ok === false;
+        var sending = C.buildLedgerRow('Q-004', 't', '本文', p, C.decideRoute(p)); sending.status = '送信中';
+        return C.approve(C.approve(row, '佐藤', '文', 't2').row, '佐藤', '文', 't3').ok === false && C.approve(sending, '佐藤', '文', 't3').ok === false;
+      }],
+      ['T25 伏せ字：かっこ・ドット・+81・ハイフンなし郵便番号も消える', function () {
+        return ['(03)0000-0000', '03(0000)0000', '090.0000.0000', '09000000000', '+81 90-0000-0000', '〒1234567', '090の0000の0000', '090 - 0000 - 0000'].every(function (x) {
+          var r = C.maskPII('連絡先は ' + x + ' です');
+          return !/\d{3}/.test(r.text) && r.found.length === 1;
+        });
+      }],
+      ['T26 伏せ字：日付・注文番号・型番は巻き込まない', function () {
+        return ['見積番号 2024-10-15 の件', '注文番号123-456-7890', '資料は 2024-1234-5678 です', '型番 AB-100-20 の蛇口', '築3年、2階の3-2 の部屋',
+          '市販のフィルターFL-20-30 を交換', '町内会の件、3-2 号室'].every(function (x) {
+          var r = C.maskPII(x);
+          return r.text === x && r.found.length === 0;
+        });
+      }],
+      ['T27 伏せ字：町名の直後の番地は消え、種類の表示も正しい', function () {
+        var r = C.maskPII('架空市中央3-2-1 です');
+        return r.text === '架空市中央［番地］ です' && J(r.found) === J(['番地']) &&
+          ['架空市中央2の8の1', '架空市中央 2 - 8 - 1'].every(function (x) { return !/\d/.test(C.maskPII(x).text); });
+      }],
+      ['T28 AI応答：金額・訪問・リンクは、書き方を変えても通さない', function () {
+        return ['８０００円です', '八千円です', '1万円ほどです', '￥5000です', '5000yenです', '無償で対応します', '全額返金します', 'すべて無料です', '無料にて承ります', '保証します',
+          '明日10時に伺います', '今日中に伺います', 'すぐに駆けつけます', '必ず参ります',
+          'www.example.com をご覧ください', 'example.jp/x へ', 'ｈｔｔｐｓ：//example.com', 'hxxp://example.com'].every(function (x) {
+          return C.parseAiResponse(J({ category: 'その他', urgent: false, draft: x })).ok === false;
+        });
+      }],
+      ['T29 AI応答：電話番号やメールが入った下書きは通さない', function () {
+        return C.parseAiResponse(J({ category: 'その他', urgent: false, draft: '03-0000-0000 までお電話ください。' })).ok === false &&
+          C.parseAiResponse(J({ category: 'その他', urgent: false, draft: 'a@example.com へご連絡ください。' })).ok === false;
+      }],
+      ['T30 AI応答：画面の例で使う下書きは、検査を通る', function () {
+        return ['内容を確認のうえ、担当より折り返しご連絡いたします。', 'お急ぎの状況と承知しました。当番の担当より、すぐに折り返しご連絡いたします。',
+          '空き状況を確認のうえ、候補の日時を折り返しご連絡いたします。'].every(function (x) {
+          return C.parseAiResponse(J({ category: 'その他', urgent: false, draft: x })).ok === true;
+        });
+      }],
+      ['T32 AI応答：約束ではない普通の返信文は止めない', function () {
+        return ['保証書をご準備ください。', '保証期間内かどうか確認します。', '無料のお見積りは承れるか確認します。', '今日は伺えません。',
+          '今すぐ伺うことはお約束できません。', 'すぐに状況を伺います。', 'ご返金の可否は確認します。',
+          '料金は確認して折り返します。無料か有料かも含めます。'].every(function (x) {
+          return C.parseAiResponse(J({ category: 'その他', urgent: false, draft: x })).ok === true;
+        });
+      }],
+      ['T31 台帳：数式で始まる文字は、数式として実行されない形にして書く', function () {
+        return C.sanitizeCell('=IMPORTXML("x")') === "'=IMPORTXML(\"x\")" && C.sanitizeCell('+1') === "'+1" && C.sanitizeCell('@SUM(1)') === "'@SUM(1)" &&
+          C.sanitizeCell('-1') === "'-1" && C.sanitizeCell('蛇口の件') === '蛇口の件' && C.sanitizeCell(true) === true;
       }]
     ];
 
@@ -85,10 +133,10 @@
     var results = sync.map(function (t) { return { name: t[0], pass: safe(t[1]) }; });
 
     var body = '{"events":[]}';
-    return Promise.all([hmac('secret', body), hmac('secret', body), hmac('secret', '{"events":[ ]}'), hmac('other', body)])
+    return Promise.all([hmac('secret', body), hmac('secret', body), hmac('secret', '{"events":[ ]}'), hmac('other', body), hmac('Jefe', 'what do ya want for nothing?')])
       .then(function (s) {
         return [
-          { name: 'T05 署名：正しい署名は通る', pass: C.safeEqual(s[0], s[1]) === true },
+          { name: 'T05 署名：正しい署名は通る（公開されている検算用の値とも一致）', pass: C.safeEqual(s[0], s[1]) === true && s[4] === 'W9zBRr9gdU5qBCQmCJV1x1oAPwidJzmDnexYuWTsOEM=' },
           { name: 'T06 署名：本文が1文字でも変わると通らない', pass: C.safeEqual(s[0], s[2]) === false },
           { name: 'T07 署名：鍵が違うと通らない', pass: C.safeEqual(s[0], s[3]) === false },
           { name: 'T08 署名：署名なし・長さ違いは通らない', pass: C.safeEqual(undefined, s[0]) === false && C.safeEqual('', s[0]) === false && C.safeEqual('abc', 'abcd') === false }

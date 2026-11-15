@@ -7,7 +7,7 @@
 <title>問い合わせ受付デモ</title>
 <style>
   :root{
-    --ground:#F6F8FB;--surface:#FFFFFF;--ink:#16202B;--ink-2:#5B6977;--ink-3:#8A97A5;
+    --ground:#F6F8FB;--surface:#FFFFFF;--ink:#16202B;--ink-2:#5B6977;--ink-3:#66737F;
     --rule:#D7DFE8;--grid:#E9EEF4;--accent:#23508C;--accent-soft:#EAF0F9;
     --flag:#AE3F2B;--flag-soft:#FBEDEA;--ok:#2C6E49;--ok-soft:#E8F3EC;--chip:#EEF2F7;
     --serif:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
@@ -16,13 +16,13 @@
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
-      --ground:#0F141A;--surface:#161D25;--ink:#E3EAF2;--ink-2:#9CAAB8;--ink-3:#6F7D8B;
+      --ground:#0F141A;--surface:#161D25;--ink:#E3EAF2;--ink-2:#9CAAB8;--ink-3:#8E9BA9;
       --rule:#2A3541;--grid:#1A222B;--accent:#82AADE;--accent-soft:#1A2635;
       --flag:#E2907A;--flag-soft:#2C1F1C;--ok:#7FC79B;--ok-soft:#18271E;--chip:#1E2833;
     }
   }
   :root[data-theme="dark"]{
-    --ground:#0F141A;--surface:#161D25;--ink:#E3EAF2;--ink-2:#9CAAB8;--ink-3:#6F7D8B;
+    --ground:#0F141A;--surface:#161D25;--ink:#E3EAF2;--ink-2:#9CAAB8;--ink-3:#8E9BA9;
     --rule:#2A3541;--grid:#1A222B;--accent:#82AADE;--accent-soft:#1A2635;
     --flag:#E2907A;--flag-soft:#2C1F1C;--ok:#7FC79B;--ok-soft:#18271E;--chip:#1E2833;
   }
@@ -79,6 +79,8 @@
   th,td{padding:9px 12px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;}
   th{background:var(--chip);font-size:12px;color:var(--ink-2);letter-spacing:.04em;white-space:nowrap;}
   tbody tr{cursor:pointer;}
+  .rowbtn{background:none;border:0;padding:0;font-family:var(--mono);color:var(--accent);text-decoration:underline;cursor:pointer;}
+  .start{margin:0 0 14px;font-size:15px;font-weight:600;}
   tbody tr:hover,tbody tr.sel{background:var(--accent-soft);}
   td.txt{max-width:280px;}
   .tag{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--rule);background:var(--chip);white-space:nowrap;}
@@ -114,39 +116,41 @@
     <p class="eyebrow">DEMO ／ LINE × 生成AI × 台帳</p>
     <h1>LINEの問い合わせを、AIが分類して返信の下書きまで作る受付</h1>
     <p class="lede">届いた問い合わせをAIが分類し、返信の下書きを作って台帳に記録します。送るのは、担当者が中身を確認したあとです。AIが勝手に返信することはありません。</p>
-    <p class="notice"><b>このデモについて</b>　自主制作のサンプルで、会社名・問い合わせ・担当者はすべて架空です。公開ページのため、LINEと生成AIのAPIにはつないでいません。受信とAIの応答はこの画面の中で模擬しています。伏せ字・応答の検査・振り分け・送信の記録は、本番用と同じコード（<a href="core.js">core.js</a>）が動いています。</p>
+    <p class="start">まず下の <a href="#step1">「届いたことにする」</a> を押してください。例は6種類あります。</p>
+    <p class="notice"><b>このデモについて</b>　自主制作のサンプルで、データはすべて架空です。LINEと生成AIにはつないでおらず、受信・署名・AIの応答は画面の中の模擬です。伏せ字・応答の検査・振り分け・送信の記録は、本番を想定して書いた判定コード（<a href="core.js">core.js</a>）がこの画面でも動いています。</p>
     <p class="sub" style="margin:12px 0 0">ほかの実績は <a href="../">実績集</a> にまとめています。</p>
   </div>
 </header>
 
 <main class="wrap">
 
-  <section>
+  <section id="step1">
     <h2><span class="n">STEP 1</span>問い合わせを受信する</h2>
-    <p class="sub">例を選ぶか、自由に書いて「受信する」を押してください。電話番号や住所を入れると、伏せ字の動きが分かります。</p>
+    <p class="sub">例を選ぶか、自由に書いて「届いたことにする」を押してください。電話番号や住所を入れると、伏せ字の動きが分かります。</p>
     <div class="card">
       <div class="chips" id="chips"></div>
       <textarea id="input" aria-label="問い合わせ文"></textarea>
       <div class="row">
-        <button class="btn" id="recv">受信する</button>
+        <button class="btn" id="recv">届いたことにする</button>
         <button class="btn warn" id="tamper">改ざんした通信を送る</button>
-        <label class="opt"><input type="checkbox" id="broken">AIが約束ごとを破った応答を返す場合を試す</label>
+        <label class="opt"><input type="checkbox" id="broken">AIが金額と訪問を約束した応答を返す場合を試す</label>
       </div>
     </div>
   </section>
 
-  <section>
+  <section id="step2">
     <h2><span class="n">STEP 2</span>受信から台帳に載るまで</h2>
-    <p class="sub">1件ごとに、次の5つを順に通ります。途中で止まった場合は、その先へ進みません。</p>
+    <p class="sub">1件ごとに、次の5つを順に通ります。署名が合わない通信は、その先へ進みません。AIの応答が検査を通らない場合は、下書きを使わず、人の手作業に回します。</p>
+    <p class="sub" id="pipeStatus" role="status"></p>
     <ol class="pipe" id="pipe"></ol>
   </section>
 
-  <section>
+  <section id="step3">
     <h2><span class="n">STEP 3</span>台帳で確認して送る</h2>
-    <p class="sub">行を選ぶと、下に確認の欄が出ます。下書きは直してから送れます。</p>
+    <p class="sub">番号を選ぶと、下に確認の欄が出ます。下書きは直してから送れます。このデモでは確認者を誰でも選べます。本番では、ログインした本人が確認者になる想定です。</p>
     <div class="tablebox">
       <table>
-        <thead><tr><th>番号</th><th>受信</th><th>本文（伏せ字済み）</th><th>分類</th><th>担当</th><th>状態</th><th>送信者</th></tr></thead>
+        <thead><tr><th>番号</th><th>受信</th><th>本文（伏せ字済み）</th><th>分類</th><th>担当</th><th>状態</th><th>確認者</th></tr></thead>
         <tbody id="ledger"></tbody>
       </table>
       <div class="empty" id="empty">まだ受信がありません。STEP 1 から受信してください。</div>
@@ -158,29 +162,31 @@
         <label class="opt">確認者
           <select id="approver"><option value="">選んでください</option><option>佐藤（受付）</option><option>高橋（当番）</option><option>田中（責任者）</option></select>
         </label>
-        <button class="btn" id="send">確認して送信する</button>
+        <button class="btn" id="send">確認して送信を記録する</button>
       </div>
-      <p class="msg" id="panelMsg"></p>
+      <p class="msg" id="panelMsg" aria-live="polite" tabindex="-1"></p>
     </div>
   </section>
 
   <section>
-    <h2><span class="n">安全のための作り</span></h2>
-    <p class="sub">お客様の情報を預かる仕組みなので、次の4つを最初から組み込んでいます。</p>
+    <h2><span class="n">SECURITY</span>安全のための作り</h2>
+    <p class="sub">お客様の情報を預かる仕組みなので、次の4つを最初から設計に入れています。</p>
     <div class="guards">
       <div><h3>鍵はコードに書かない</h3><p>LINEと生成AIの鍵は、Google Apps Script のスクリプトプロパティに置きます。コードやシートには残しません（<a href="Code.gs">Code.gs</a>）。</p></div>
-      <div><h3>なりすましの通信は捨てる</h3><p>LINEから届いた通信かどうかを、署名で確かめます。合わない通信は、中身を読まずに捨てます。「改ざんした通信を送る」で試せます。</p></div>
-      <div><h3>AIに渡す前に伏せ字にする</h3><p>電話番号・メール・郵便番号・番地は、AIへ渡す前と台帳へ書く前に伏せます。AIへの指示文は STEP 2 でそのまま見られます。</p></div>
-      <div><h3>AIの応答は検査し、送るのは人</h3><p>形が崩れた応答、金額や訪問を約束した下書き、リンク入りの下書きは使いません。クレームは下書きを使わず責任者へ回します。</p></div>
+      <div><h3>なりすましの通信は捨てる</h3><p>本番の設計では、前段の中継で署名を確かめ、合わない通信は中身を読まずに捨てます。中継は作っておらず、この画面の署名は模擬です。「改ざんした通信を送る」で流れを試せます。</p></div>
+      <div><h3>AIに渡す前に伏せ字にする</h3><p>電話番号・メール・郵便番号・番地は、AIへ渡す前と台帳へ書く前に伏せます。かっこやドットで区切った番号は拾い、日付や注文番号は巻き込みません。AIへの指示文は STEP 2 でそのまま見られます。</p></div>
+      <div><h3>AIの応答は検査し、送るのは人</h3><p>形が崩れた応答、金額や訪問を約束した下書き、リンクや連絡先が入った下書きは使いません。クレームは下書きを使わず責任者へ回します。語句で調べる検査なので、言い換えをすべては拾えません。最後の守りは、担当者が読んでから送ることです。</p></div>
     </div>
     <ul class="todo">
-      <li>作っていない範囲：LINEとの実接続、生成AIの実呼び出し、署名を確かめる中継サーバー。Code.gs は設計を示す見本で、公開デモでは動かしていません。</li>
-      <li>氏名は機械的な伏せ字では拾いきれません。AIへ渡してよい範囲は、導入前にお客様と取り決める前提です。</li>
+      <li>作っていない範囲：LINEとの実接続、生成AIの実呼び出し、署名を確かめる中継サーバー、当番への通知。Code.gs は設計を示す見本で、公開デモでは動かしていません。</li>
+      <li>伏せ字で拾えないもの：氏名、カード番号、数字を1字ずつ空けた書き方、町名のない番地。AIへ渡してよい範囲は、導入前にお客様と取り決める前提です。</li>
+      <li>例の「指示の埋め込み」について：この画面の模擬AIは、もともと指示に従わない作りです。実際のAIが従ってしまった場合の備えは、応答の検査です（STEP 1 のチェックで試せます）。</li>
+      <li>伏せ字を通した本文は、全角の英数字を半角にそろえています。</li>
     </ul>
   </section>
 
   <section>
-    <h2><span class="n">検証</span>自動テストの結果</h2>
+    <h2><span class="n">TESTS</span>自動テストの結果</h2>
     <p class="sub">受け入れ条件を先に決め、それをテストにしています。下のボタンで、いまこの画面の中で実行し直せます。</p>
     <div class="card">
       <div class="row" style="margin-top:0">
@@ -229,7 +235,7 @@
   function mockAi(masked, broken){
     var cat='その他', urgent=false, draft='お問い合わせありがとうございます。内容を確認のうえ、担当より折り返しご連絡いたします。';
     if(/返金|ひどい|また壊れ|クレーム|最悪/.test(masked)){cat='クレーム';draft='ご不便をおかけし申し訳ございません。状況を確認のうえ、責任者よりご連絡いたします。';}
-    else if(/予約|変更|キャンセル|日程/.test(masked)){cat='予約変更';draft='ご連絡ありがとうございます。ご予約の変更を承りました。空き状況を確認のうえ、候補の日時を折り返しご連絡いたします。';}
+    else if(/予約|変更|キャンセル|日程/.test(masked)){cat='予約変更';draft='ご連絡ありがとうございます。ご予約変更の件、確認いたします。空き状況を確認のうえ、候補の日時を折り返しご連絡いたします。';}
     else if(/いくら|料金|費用|値段/.test(masked)){cat='料金の質問';draft='お問い合わせありがとうございます。費用は状況によって変わるため、内容を確認のうえ、担当より目安を折り返しご連絡いたします。';}
     else if(/見積|交換|修理|漏れ|つまり|壊れ/.test(masked)){cat='見積依頼';draft='お問い合わせありがとうございます。お見積もりのため、状況を確認のうえ、担当より折り返しご連絡いたします。';}
     if(/漏れ|止まりません|急ぎ|至急|あふれ/.test(masked)&&cat!=='クレーム'){urgent=true;draft='ご連絡ありがとうございます。お急ぎの状況と承知しました。当番の担当より、すぐに折り返しご連絡いたします。';}
@@ -247,18 +253,23 @@
     }).join('');
   }
   drawPipe([]);
+  // 結果は画面の下に出るので、押したあとに STEP 2 まで動かし、要約だけを読み上げる
+  function after(summary){
+    $('pipeStatus').textContent=summary;
+    $('step2').scrollIntoView({behavior:'smooth',block:'start'});
+  }
 
   function receive(tampered){
     var text=$('input').value.trim();
     if(!text){drawPipe([{cls:'ng',html:'<b class="ng">問い合わせ文が空です。</b>'}]);return;}
     var body=JSON.stringify({events:[{type:'message',message:{type:'text',text:text}}]});
     var st=[];
-    hmac(DEMO_SECRET,body).then(function(sig){
+    Promise.resolve().then(function(){return hmac(DEMO_SECRET,body);}).then(function(sig){
       var arrived=tampered?body.replace('"text":"','"text":"（書き換え）'):body;
       return hmac(DEMO_SECRET,arrived).then(function(expected){
         if(!C.safeEqual(expected,sig)){
-          st[0]={cls:'ng',html:'<b class="ng">署名が合いません。</b>途中で書き換えられた通信として捨てました。本文は読まず、台帳にもログにも残しません。'};
-          drawPipe(st);return;
+          st[0]={cls:'ng',html:'<b class="ng">署名が合いません。</b>途中で書き換えられた通信として捨てました。本文は読まず、台帳にも残しません（捨てたことだけを、本文なしで警告として記録する設計です）。'};
+          drawPipe(st);after('署名が合わない通信を捨てました。台帳には載りません。');return;
         }
         st[0]={cls:'ok',html:'<b class="ok">一致しました。</b>LINEから届いた通信として受け付けます。'};
         var m=C.maskPII(text);
@@ -274,7 +285,8 @@
         var row=C.buildLedgerRow('Q-'+('00'+(++seq)).slice(-3),hh,m.text,p,route);
         rows.unshift(row);
         st[4]={cls:'ok',html:'<b class="ok">'+esc(row.id)+' として記録しました。</b>担当：'+esc(route.assignee)+'／状態：'+esc(route.status)+(route.note?'。'+esc(route.note)+'。':'')};
-        drawPipe(st);drawLedger();select(row.id);
+        drawPipe(st);select(row.id);
+        after(row.id+' を台帳に記録しました（'+route.status+'）。確認の欄は STEP 3 にあります。');
       });
     }).catch(function(){
       drawPipe([{cls:'ng',html:'<b class="ng">この環境では署名の計算ができません。</b>https で開いてください。'}]);
@@ -286,22 +298,24 @@
   /* ---- 台帳 ---- */
   function tagCls(s){return s==='送信済み'?'done':s==='手作業で対応'?'hand':/至急|責任者/.test(s)?'hot':'wait';}
   function drawLedger(){
+    var had=$('ledger').contains(document.activeElement);
     $('empty').hidden=rows.length>0;
     $('ledger').innerHTML=rows.map(function(r){
-      return '<tr data-id="'+r.id+'" class="'+(r.id===selected?'sel':'')+'" tabindex="0"><td>'+r.id+'</td><td>'+r.receivedAt+'</td><td class="txt">'+esc(r.text)+'</td><td>'+esc(r.category)+'</td><td>'+esc(r.assignee)+'</td><td><span class="tag '+tagCls(r.status)+'">'+esc(r.status)+'</span></td><td>'+esc(r.sentBy||'—')+'</td></tr>';
+      var on=r.id===selected;
+      return '<tr data-id="'+r.id+'" class="'+(on?'sel':'')+'"><td><button type="button" class="rowbtn" aria-pressed="'+on+'" aria-label="'+r.id+' を確認する">'+r.id+'</button></td><td>'+r.receivedAt+'</td><td class="txt">'+esc(r.text)+'</td><td>'+esc(r.category)+'</td><td>'+esc(r.assignee)+'</td><td><span class="tag '+tagCls(r.status)+'">'+esc(r.status)+'</span></td><td>'+esc(r.sentBy||'—')+'</td></tr>';
     }).join('');
+    if(had){var b=$('ledger').querySelector('tr.sel .rowbtn');if(b)b.focus();}
   }
   function select(id){
     selected=id;drawLedger();
     var r=rows.filter(function(x){return x.id===id;})[0];
     $('panel').hidden=false;$('panelMsg').textContent='';$('panelMsg').className='msg';
     var done=r.status==='送信済み';
-    $('panelHead').textContent=r.id+'（'+r.category+'・担当：'+r.assignee+'）'+(done?'　送信済みです。':r.draft?'　AIの下書きです。直してから送れます。':'　AIの下書きは使いません。返信文を書いてください。');
+    $('panelHead').textContent=r.id+'（'+r.category+'・担当：'+r.assignee+'）'+(done?'　送信を記録済みです（デモのため、実際のLINE送信はしていません）。':r.draft?'　AIの下書きです。直してから送れます。':'　AIの下書きは使いません。返信文を書いてください。');
     $('draft').value=r.draft;$('draft').disabled=done;$('send').disabled=done;$('approver').disabled=done;
     $('approver').value=done?r.sentBy:'';
   }
   $('ledger').addEventListener('click',function(e){var tr=e.target.closest('tr');if(tr)select(tr.dataset.id);});
-  $('ledger').addEventListener('keydown',function(e){if(e.key==='Enter'){var tr=e.target.closest('tr');if(tr)select(tr.dataset.id);}});
   $('send').onclick=function(){
     var i=-1;rows.forEach(function(x,k){if(x.id===selected)i=k;});
     var now=new Date(), at=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
@@ -309,6 +323,7 @@
     if(!res.ok){$('panelMsg').textContent='送信できません：'+res.reason;$('panelMsg').className='msg ng';return;}
     rows[i]=res.row;select(selected);
     $('panelMsg').textContent='送信を記録しました（'+res.row.sentBy+'・'+at+'）。このデモでは、実際のLINE送信は行いません。';$('panelMsg').className='msg ok';
+    $('panelMsg').focus(); // 押したボタンが使えなくなるので、操作の位置を結果の文へ移す
   };
 
   /* ---- テスト ---- */
